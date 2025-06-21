@@ -1,0 +1,206 @@
+:root {
+  --bg-color-dark: #121212;
+  --bg-color-light: #ffffff;
+  --text-color-dark: #e0e0e0;
+  --text-color-light: #333;
+  --accent-color: #007acc;
+}
+
+[data-theme="dark"] {
+  background-color: var(--bg-color-dark);
+  color: var(--text-color-dark);
+}
+
+[data-theme="light"] {
+  background-color: var(--bg-color-light);
+  color: var(--text-color-light);
+}
+
+body {
+  margin: 0;
+  padding: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.toggle-theme {
+  cursor: pointer;
+  font-size: 1.2rem;
+  border: none;
+  background: none;
+  color: inherit;
+}
+/* Layout container */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header layout */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header h1 {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+/* Light/dark mode toggle */
+.toggle-theme {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.toggle-theme:hover {
+  background-color: #444;
+}
+
+/* Project & Quick Tool cards */
+.project-card {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.project-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+}
+
+.project-desc {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-bottom: 0.6rem;
+}
+
+/* Input fields */
+.project-card input[type="text"] {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  margin-top: 0.25rem;
+}
+
+/* Buttons (Convert, Generate) */
+.project-card button {
+  background-color: #2b2b2b;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  margin-top: 0.5rem;
+}
+
+.project-card button:hover {
+  background-color: #3a3a3a;
+}
+
+/* Result output display */
+.result {
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: #b2fab4;
+  background-color: #1e3421;
+  border-left: 4px solid #4caf50;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
+
+/* UUID result layout */
+.copy-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+/* Copy button next to UUID */
+.copy-btn {
+  background-color: transparent;
+  border: none;
+  color: #bbb;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.2rem;
+}
+
+.copy-btn:hover {
+  color: #fff;
+}
+
+/* Tooltip after copying */
+.copy-tooltip {
+  background-color: #2f703a;
+  color: #b2fab4;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.copy-tooltip.visible {
+  opacity: 1;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .project-grid {
+    padding: 1rem;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+}

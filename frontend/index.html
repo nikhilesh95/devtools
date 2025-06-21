@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <title>Developer Toolbox</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+  <script src="/assets/theme.js" defer></script>
+</head>
+<body>
+  <header class="page-header">
+    <h1>🧰 Developer Toolbox</h1>
+    <button class="toggle-theme">🌞 Light Mode</button>
+  </header>
+
+  <main class="project-grid">
+    <!-- JSON Helper -->
+    <a href="/projects/json-helper/json-helper.html" class="project-card">
+      <div class="project-title">JSON Helper</div>
+      <div class="project-desc">
+        Validate, beautify, compress, and copy JSON easily — with more features coming soon.
+      </div>
+    </a>
+
+    <!-- Epoch Converter -->
+    <div class="project-card">
+      <div class="project-title">Epoch Converter</div>
+      <div class="project-desc">Convert Unix timestamps into human-readable date/time.</div>
+      <label for="epochInput">Unix Timestamp</label>
+      <input type="text" id="epochInput" placeholder="e.g. 1721571133" />
+      <button onclick="convertEpoch()">Convert</button>
+      <div id="epochResult" class="result">// Result will appear here</div>
+    </div>
+
+    <!-- UUID Generator -->
+    <div class="project-card">
+      <div class="project-title">UUID Generator</div>
+      <div class="project-desc">Generate RFC-compliant UUIDs instantly.</div>
+      <button onclick="generateUUID()">Generate UUID</button>
+      <div class="result copy-result">
+        <span id="uuidResult">// Result will appear here</span>
+        <button class="copy-btn" onclick="copyUUID()" title="Copy UUID">📋</button>
+        <span id="uuidTooltip" class="copy-tooltip">Copied</span>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function convertEpoch() {
+      const val = document.getElementById("epochInput").value;
+      const result = document.getElementById("epochResult");
+      const epoch = parseInt(val, 10);
+      if (isNaN(epoch)) {
+        result.textContent = "❌ Invalid timestamp";
+        return;
+      }
+      const date = new Date(epoch * 1000);
+      result.textContent = "📅 " + date.toLocaleString();
+    }
+
+    function generateUUID() {
+      const uuid = crypto.randomUUID();
+      document.getElementById("uuidResult").textContent = uuid;
+      document.getElementById("uuidTooltip").classList.remove("visible");
+    }
+
+    function copyUUID() {
+      const uuid = document.getElementById("uuidResult").textContent;
+      navigator.clipboard.writeText(uuid).then(() => {
+        const tooltip = document.getElementById("uuidTooltip");
+        tooltip.classList.add("visible");
+        setTimeout(() => tooltip.classList.remove("visible"), 1500);
+      });
+    }
+  </script>
+</body>
+</html>
