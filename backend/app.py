@@ -1,23 +1,35 @@
 from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
-import logging
-from run_project import run_docker
-
-# Logging setup
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+from fastapi.responses import JSONResponse
+import json
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+@app.get("/hello")
+async def ping():
+    return {"status": "alive"}
 
 @app.post("/run/json-helper")
-async def run_json_helper(request: Request):
-    data = await request.json()
-    result = run_docker("json-helper", data)
-    return result
+async def json_helper(request: Request):
+    try:
+        body = await request.json()
+        text = body.get("input", "")
+        action = body.get("action", "validate")
+
+        if action == "validate":
+            # Try parsing JSON
+            json.loads(text)
+            return {"result": "Valid JSON ✅"}
+
+        elif action == "beautify":
+            parsed = json.loads(text)
+            return {"result": json.dumps(parsed, indent=2)}
+
+        elif action in ("minify", "compress"):
+            parsed = json.loads(text)
+            return {"result": json.dumps(parsed, separators=(",", ":"))}
+
+        else:
+            return JSONResponse(status_code=400, content={"error": f"Unknown action: {action}"})
+
+    except json.JSONDecodeError as e:
+        return JSONResponse(status_code=400, content={"error": str(e)})
