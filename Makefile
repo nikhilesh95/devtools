@@ -18,7 +18,7 @@ start-backend:
 
 start-frontend:
 	@echo "🌐 Starting frontend at http://localhost:5500"
-	cd frontend && python3 -m http.server 5500
+	cd docs && python3 -m http.server 5500
 
 clean-venv:
 	@echo "🧹 Cleaning virtual environment..."

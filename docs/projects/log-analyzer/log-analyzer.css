@@ -1,0 +1,135 @@
+
+
+.log-viewer-section {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 1rem;
+  background-color: var(--bg-secondary);
+  height: 50vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.log-viewer {
+  flex: 1;
+  overflow-y: auto;
+  font-family: monospace;
+  padding: 0.5rem;
+  background-color: var(--bg);
+  border-radius: var(--radius);
+  scroll-behavior: smooth;
+}
+
+.line {
+  position: relative;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  white-space: pre-wrap;
+  line-height: 1.4;
+  transition: background-color 0.2s;
+}
+
+.line:hover {
+  background-color: var(--hover-bg);
+}
+
+.line.highlighted {
+  background-color: rgba(0, 200, 255, 0.15);
+  outline: 2px solid var(--accent-color);
+}
+
+.annotation-popup {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 10px);
+  background-color: var(--bg);
+  border: 1px solid var(--border-color);
+  padding: 6px;
+  border-radius: var(--radius);
+  z-index: 10;
+  width: 200px;
+}
+
+.annotation-popup input {
+  width: 100%;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 4px 6px;
+  background-color: var(--bg);
+  color: var(--text-color);
+}
+
+.annotation-panel {
+  flex: 0 0 30%;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.annotation-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.annotation-list li {
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  background-color: var(--card-bg);
+  border-left: 4px solid var(--accent-color);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.log-viewer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+#log-search-toggle {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#log-search-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background-color: var(--bg-secondary);
+  color: var(--text-color);
+}
+
+#log-search-clear {
+  background: var(--hover-bg);
+  color: var(--text-color);
+  border: none;
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.search-options {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
