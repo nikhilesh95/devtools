@@ -1,5 +1,4 @@
 let currentSearchTerm = "";
-let strictMatch = true;
 
 const logLines = [
     "2025-03-19 05:41:11,516 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.w.e.c.CommandController | Command request: DeviceId{protocol=HTTPS, clientAddress=/192.0.0.2, serialNumber='CAT2222L1QX', sudiSerialNumber='CAT2222L1QX', platformId='C9500-32QC', correlatorId='CiscoPnP-1.0-R35.201014-I10-P379-T226299-8', macAddress='', hostname='Switch', authRequired=false, authStatus=AUTHENTICATED, lastProcessedCmdId=null, requestId='fb81139d4a404f64a355416eeedcb08a', correlationId='043a38b0-0da0-445a-beec-f8a5876af43b'} | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, mac=",
@@ -37,6 +36,11 @@ const logLines = [
 const annotations = {};
 let currentPopup = null;
 
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function renderLog(searchTerm = "") {
   currentSearchTerm = searchTerm;
   const viewer = document.getElementById("log-viewer");
@@ -49,11 +53,7 @@ function renderLog(searchTerm = "") {
     let shouldShow = true;
 
     if (hasValidQuery) {
-        if (strictMatch) {
-        shouldShow = evaluateRPN(rpn, line);
-        } else {
-        shouldShow = evaluateRPN(rpn, line); // loose match mode (future extensible)
-        }
+      shouldShow = evaluateRPN(rpn, line);
     }
 
     if (!shouldShow) return;
@@ -62,7 +62,19 @@ function renderLog(searchTerm = "") {
     lineDiv.className = "line";
     lineDiv.dataset.index = index;
     lineDiv.id = `log-line-${index}`;
-    lineDiv.textContent = `${index + 1}: ${line}`;
+
+    let lineHTML = line;
+
+    if (hasValidQuery) {
+    const terms = extractSearchTerms(rpn);
+    for (const term of terms) {
+        const regex = new RegExp(`(${escapeRegExp(term)})`, "gi");
+        lineHTML = lineHTML.replace(regex, `<mark>$1</mark>`);
+    }
+    }
+
+    lineDiv.innerHTML = `${index + 1}: ${lineHTML}`;
+
 
     if (annotations[index]?.highlightNext) {
       lineDiv.classList.add("highlighted");
@@ -198,17 +210,29 @@ searchInput.addEventListener("input", () => {
 });
 
 
-const strictCheckbox = document.getElementById("strict-match-checkbox");
-strictCheckbox.addEventListener("change", () => {
-  strictMatch = strictCheckbox.checked;
-  renderLog(currentSearchTerm);
-});
-
 function parseExpression(expr) {
   expr = expr.trim();
   if (!expr) return [];
 
-  const tokens = expr.match(/\(|\)|AND|OR|[^()\s]+/g);
+  const rawTokens = expr.match(/\(|\)|AND|OR|[^()\s]+/g);
+  const tokens = [];
+
+  for (let i = 0; i < rawTokens.length; i++) {
+    const token = rawTokens[i];
+    const prev = rawTokens[i - 1];
+
+    tokens.push(token);
+
+    // Insert implicit AND if: [word][word] or [)][word] or [word][(]
+    if (
+      i > 0 &&
+      !["AND", "OR", "(", ")"].includes(prev.toUpperCase()) &&
+      !["AND", "OR", ")", "("].includes(token.toUpperCase())
+    ) {
+      tokens.splice(tokens.length - 1, 0, "AND");
+    }
+  }
+
   const output = [];
   const stack = [];
 
@@ -241,6 +265,9 @@ function parseExpression(expr) {
   return output;
 }
 
+
+
+
 function precedence(op) {
   if (op === "OR") return 1;
   if (op === "AND") return 2;
@@ -266,3 +293,24 @@ function evaluateRPN(rpnTokens, line) {
 
   return stack.pop();
 }
+
+function extractSearchTerms(rpnTokens) {
+  return rpnTokens.filter(
+    (token) => token !== "AND" && token !== "OR" && token !== "(" && token !== ")"
+  );
+}
+
+document.getElementById('logFileInput').addEventListener('change', function (e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    const contents = event.target.result;
+    logLines = contents.split(/\r?\n/);
+    annotations = {};
+    filteredIndexes = logLines.map((_, index) => index); // reset view
+    renderLog();
+  };
+  reader.readAsText(file);
+});

@@ -23,6 +23,14 @@
   scroll-behavior: smooth;
 }
 
+mark {
+  background-color: yellow;
+  color: black;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+
 .line {
   position: relative;
   padding: 4px 8px;
@@ -93,7 +101,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
 }
 
 #log-search-toggle {
@@ -133,3 +140,22 @@
   color: var(--text-color);
   margin-bottom: 0.5rem;
 }
+
+.upload-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 6px 12px;
+  background-color: var(--accent);
+  color: var(--text-color); /* fallback white */
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s;
+}
+
+.upload-button:hover {
+  background-color: var(--accent-hover, #007bff);
+}
+

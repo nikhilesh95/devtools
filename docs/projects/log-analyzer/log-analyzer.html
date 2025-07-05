@@ -9,34 +9,33 @@
 </head>
 <body>
   <header class="header">
-    <h1>Log Analyzer</h1>
+    <h2>Log Analyzer</h2>
     <button class="toggle-theme">🌞 Light Mode</button>
   </header>
 
 <main class="container">
 <section class="log-viewer-section">
+
+  <div class="file-upload">
+    <label for="logFileInput" class="upload-button">📁 Upload Log File</label>
+    <input type="file" id="logFileInput" accept=".log,.txt" style="display: none;" />
+  </div>
+
   <div class="log-viewer-header">
-    <h2>Log Viewer</h2>
+    <h4>Search Logs</h4>
   </div>
 
   <div class="search-bar" id="log-search-bar">
-    <input type="text" id="log-search-input" placeholder="Search log..." />
+    <input type="text" id="log-search-input" placeholder="e.g. (Request OR Response) AND Error AND JAD23190AHJ" />
     <button id="log-search-clear">✖</button>
   </div>
-  <div class="search-options">
-    <label>
-        <input type="checkbox" id="strict-match-checkbox" checked />
-        Strict match – all filters match on the same line
-    </label>
-  </div>
-
 
   <div id="log-viewer" class="log-viewer"></div>
 </section>
 
 
 <section class="annotation-panel">
-    <h2>Annotations</h2>
+    <h4>Annotations</h4>
     <ul id="annotations-list" class="annotation-list"></ul>
 </section>
 </main>
