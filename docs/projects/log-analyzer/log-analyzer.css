@@ -141,23 +141,39 @@ mark {
   margin-bottom: 0.5rem;
 }
 
-.upload-button {
-  display: inline-flex;
+.file-upload {
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 6px 12px;
-  background-color: var(--accent);
-  color: var(--text-color); /* fallback white */
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.upload-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--accent-color);
+  color: white;
   border-radius: var(--radius);
-  font-size: 0.9rem;
   cursor: pointer;
-  border: 1px solid var(--border-color);
-  transition: background-color 0.3s;
+  font-weight: 500;
+  border: none;
 }
 
 .upload-button:hover {
-  background-color: var(--accent-hover, #007bff);
+  background-color: var(--accent-color-hover, #0069d9);
 }
+
+.file-name {
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.file-summary {
+  font-size: 0.85rem;
+  color: var(--text-color);
+  margin-left: 0.25rem;
+  margin-bottom: 1rem;
+}
+
 
 .share-overlay {
   position: fixed;
@@ -197,6 +213,23 @@ mark {
   resize: vertical;
 }
 
+.themed-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.themed-button:hover {
+  background-color: var(--accent-color-hover, #005fa3);
+}
+
+
 .share-modal button {
   background-color: var(--accent-color);
   color: #fff;
@@ -219,4 +252,10 @@ mark {
 
 .share-modal button.share-close:hover {
   background-color: #800010;
+}
+
+.action-bar {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.5rem;
 }

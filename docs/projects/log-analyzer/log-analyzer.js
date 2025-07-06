@@ -3,7 +3,7 @@ let currentSearchTerm = "";
 let logLines = [];
 
 
-const annotations = {};
+let annotations = {};
 let currentPopup = null;
 
 
@@ -271,26 +271,38 @@ function extractSearchTerms(rpnTokens) {
 }
 
 const fileInput = document.getElementById("logFileInput");
+const fileNameDisplay = document.getElementById("fileNameDisplay");
+const fileSummary = document.getElementById("fileSummary");
+
 fileInput.addEventListener("change", function (e) {
   const file = e.target.files[0];
   if (!file) return;
 
   const allowedTypes = [".log", ".txt", ".rtf"];
-  if (!allowedTypes.some((ext) => file.name.endsWith(ext))) {
+  const ext = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
+
+  if (!allowedTypes.includes(ext)) {
     alert("Only .log, .txt, or .rtf files are supported.");
     return;
   }
 
+  const fileSizeKB = (file.size / 1024).toFixed(1); // in KB
+  fileNameDisplay.textContent = `📄 ${file.name}`;
+
   const reader = new FileReader();
   reader.onload = function (event) {
     const contents = event.target.result;
-    logLines = contents.split(/\\r?\\n/);
+    logLines = contents.split(/\r?\n/);
     annotations = {};
-    filteredIndexes = logLines.map((_, index) => index);
+    console.log("Loaded lines:", logLines.length);
     renderLog();
+
+    const lineCount = logLines.length;
+    fileSummary.textContent = `📦 ${lineCount.toLocaleString()} lines | ${fileSizeKB} KB`;
   };
   reader.readAsText(file);
 });
+
 
 const shareBtn = document.getElementById("shareAnnotationsBtn");
 shareBtn.addEventListener("click", () => {
