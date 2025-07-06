@@ -133,9 +133,15 @@ function renderAnnotationList() {
   Object.entries(annotations).forEach(([index, { comment, timestamp }]) => {
     const li = document.createElement("li");
     li.innerHTML = `
-      <strong>Line ${parseInt(index) + 1}</strong> @ ${timestamp}<br />
-      ${comment}
+      <div class="annotation-entry">
+        <div class="annotation-text">
+          <strong>Line ${parseInt(index) + 1}</strong> @ ${timestamp}<br />
+          ${comment}
+        </div>
+        <button class="delete-annotation-btn" data-index="${index}">🗑️</button>
+      </div>
     `;
+
     li.addEventListener("click", () => {
     annotations[index].highlightNext = true;
 
@@ -152,6 +158,14 @@ function renderAnnotationList() {
     });
 
     list.appendChild(li);
+
+    const deleteBtn = li.querySelector(".delete-annotation-btn");
+    deleteBtn.addEventListener("click", (e) => {
+      e.stopPropagation(); // prevent jumping to line
+      delete annotations[index];
+      renderLog(currentSearchTerm);
+    });
+
   });
 }
 
