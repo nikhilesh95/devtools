@@ -1,36 +1,6 @@
 let currentSearchTerm = "";
 
-const logLines = [
-    "2025-03-19 05:41:11,516 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.w.e.c.CommandController | Command request: DeviceId{protocol=HTTPS, clientAddress=/192.0.0.2, serialNumber='CAT2222L1QX', sudiSerialNumber='CAT2222L1QX', platformId='C9500-32QC', correlatorId='CiscoPnP-1.0-R35.201014-I10-P379-T226299-8', macAddress='', hostname='Switch', authRequired=false, authStatus=AUTHENTICATED, lastProcessedCmdId=null, requestId='fb81139d4a404f64a355416eeedcb08a', correlationId='043a38b0-0da0-445a-beec-f8a5876af43b'} | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, mac=",
-    "2025-03-19 05:41:11,517 |   INFO | qtp1463022229-16          | onboarding-service | c.c.pnp.api.das.impl.AbstractDas | DOCS com.mongodb.client.internal.FindIterableImpl@567917ba | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, mac=",
-    "2025-03-19 05:41:11,517 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.a.s.i.ConvergedPnpResourceDomainContextManagerImpl | Received Token with no RD Context from User system with Tenant system | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, mac=",
-    "2025-03-19 05:41:11,518 |   INFO | qtp1463022229-16          | onboarding-service | c.c.pnp.workflow.engine.utils.Utils | Device contact after 00 min, 15 sec - State Unclaimed OnbState Connecting | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,518 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.w.e.a.impl.CommandServiceImpl | System workflow not created yet. Creating it. | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,518 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.w.engine.api.impl.ModelUtils | Onboarding state moving from Connecting to Initializing  | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,518 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.w.engine.api.impl.ModelUtils | Workflow state moving from Pending to InProgress  | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,518 |   INFO | qtp1463022229-16          | onboarding-service | c.c.pnp.workflow.engine.utils.Utils | Adding RunSummary: Executing System Workflow to Initialize Device | sn=CAT2222L1QX deviceId=67da58906c8c096f5412367f | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,518 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.w.e.a.impl.CommandServiceImpl | Executing system workflow for the first time | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,518 |   INFO | qtp1463022229-16          | onboarding-service | c.c.pnp.workflow.engine.utils.Utils | Adding RunSummary: Executing Task: System Task | sn=CAT2222L1QX deviceId=67da58906c8c096f5412367f | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,518 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.w.engine.api.impl.ModelUtils | Task System state moving from Pending to InProgress  | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,519 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.w.e.task.service.TaskService | Preparing DEVICE_INFO command for next request | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,519 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.w.e.task.service.TaskService | Workitem DEVICE_INFO state moving from Pending to InProgress  | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,519 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.w.e.task.service.TaskService | Sending DEVICE_INFO command to device | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,522 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.w.e.c.CommandController | Command requested: DeviceInfoCmd{deviceInfoType=ALL} Cmd{cmdId=0779cb7a-f6a6-4d1e-82d3-4f5870741d83, serialNumber='CAT2222L1QX', maxRetries=0} | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,522 |   INFO | qtp1463022229-16          | onboarding-service | c.c.p.w.e.c.CommandController | Processed CM work-request in 6ms | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=request, sn=CAT2222L1QX, request-id=fb81139d4a404f64a355416eeedcb08a, deviceId=67da58906c8c096f5412367f, mac=",
-    "2025-03-19 05:41:11,618 |   INFO | qtp1463022229-18          | onboarding-service | c.c.p.o.filter.SecurityFilter | The token type for the request /onboarding/command-response is Maglev | request-id=8a490afb16104e459c6f84a8c5c5a29f",
-    "2025-03-19 05:41:11,618 |   INFO | qtp1463022229-18          | onboarding-service | c.c.p.w.e.c.CommandController | Command Controller POST /command-response | request-id=b8d02aae6cfe428288f7075e7a08c021, correlationId=043a38b0-0da0-445a-beec-f8a5876af43b",
-    "2025-03-19 05:41:11,619 |   INFO | qtp1463022229-18          | onboarding-service | c.c.pnp.api.das.impl.AbstractDas | DOCS com.mongodb.client.internal.FindIterableImpl@60268fee | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=response, sn=CAT2222L1QX, request-id=b8d02aae6cfe428288f7075e7a08c021",
-    "2025-03-19 05:41:11,620 |   INFO | qtp1463022229-18          | onboarding-service | c.c.p.a.s.i.ConvergedPnpResourceDomainContextManagerImpl | Received Token with no RD Context from User system with Tenant system | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=response, sn=CAT2222L1QX, request-id=b8d02aae6cfe428288f7075e7a08c021",
-    "2025-03-19 05:41:11,620 |   INFO | qtp1463022229-18          | onboarding-service | c.c.pnp.workflow.engine.utils.Utils | Device contact after 00 min, 00 sec - State Unclaimed OnbState Initializing | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=response, sn=CAT2222L1QX, request-id=b8d02aae6cfe428288f7075e7a08c021, deviceId=67da58906c8c096f5412367f",
-    "2025-03-19 05:41:11,620 |   INFO | qtp1463022229-18          | onboarding-service | c.c.p.w.e.a.impl.CommandServiceImpl | Command response: DeviceInfoResponse{imageInfo=ImageInfo{versionString='17.17.1prd14', imageFile=bootflash:packages.conf, imageHash=, returnToRomReason='PnP reset CLI', bootVariable='bootflash:packages.conf;', bootLdrVariable='', configVariable='', configReg='0x102', configRegNext=''}, hardwareInfo=HardwareInfo{hostname='Switch', vendor='cisco', platformName='C9500-32QC', processorType='X86', hwRevision='', mainMemSize=-1612736212, ioMemSize=6295128, boardId=null, boardReworkId='', processorRev='', midplaneVersion='', location='', deviceType='', deviceModel='null'}, udiInfo=UdiInfo{primaryChassisUdi='PID:C9500-32QC,VID:V01,SN:CAT2222L1QX', memberUdiList=[], haDevice=null}, fileSystemList=[FileSystemInfo{name='bootflash', type='disk', readable=true, writable=true, freespace=5657841664, size=11250098176}, FileSystemInfo{name='crashinfo', type='disk', readable=true, writable=false, freespace=1499676672, size=1651314688}, FileSystemInfo{name='webui', type='disk', readable=true, writable=false, freespace=7922245632, size=8157093888}, FileSystemInfo{name='nvram', type='nvram', readable=true, writable=false, freespace=33547212, size=33554432}, FileSystemInfo{name='cloudfs', type='disk', readable=true, writable=true, freespace=5657841664, size=11250098176}], profileInfoList=[ProfileInfo{profileName='pnp-zero-touch', discoveryCreated=true, createdBy='DHCP', primaryEndpoint=PnpEndpoint{protocol=HTTPS, port=443, ipv4Address=/11.11.11.2, ipv6Address=null, fqdn='null', certificate='null', sourceInterface ='null'}, secondaryEndpoint=null}]} CmdResponse{cmdId=0779cb7a-f6a6-4d1e-82d3-4f5870741d83, serialNumber='CAT2222L1QX', platformId='C9500-32QC', status=true, authStatus=AUTHENTICATED, errorSeverity='null', errorCode='null', errorMessage='null', timestamp='1742362871616', encoding='NONE'} | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=response, sn=CAT2222L1QX, request-id=b8d02aae6cfe428288f7075e7a08c021, deviceId=67da58906c8c096f5412367f",
-    "2025-03-19 05:41:11,620 |   INFO | qtp1463022229-18          | onboarding-service | c.c.p.w.engine.api.impl.ModelUtils | pnp profile: ProfileInfo [profileName=pnp-zero-touch, discoveryCreated=true, createdBy=DHCP, primaryEndpoint=PnpEndpoint [port=443, ipv4Address=/11.11.11.2, ipv6Address=null, fqdn=null, certificate=null], secondaryEndpoint=null] | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=response, sn=CAT2222L1QX, request-id=b8d02aae6cfe428288f7075e7a08c021, deviceId=67da58906c8c096f5412367f",
-    "2025-03-19 05:41:11,620 |   INFO | qtp1463022229-18          | onboarding-service | c.c.p.w.e.task.service.TaskService | Workitem DEVICE_INFO state moving from InProgress to Success  | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=response, sn=CAT2222L1QX, request-id=b8d02aae6cfe428288f7075e7a08c021, deviceId=67da58906c8c096f5412367f",
-    "2025-03-19 05:41:11,620 |   INFO | qtp1463022229-18          | onboarding-service | c.c.p.w.e.a.impl.CommandServiceImpl | System workflow state moved to InProgress  | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=response, sn=CAT2222L1QX, request-id=b8d02aae6cfe428288f7075e7a08c021, deviceId=67da58906c8c096f5412367f",
-    "2025-03-19 05:41:11,623 |   INFO | qtp1463022229-18          | onboarding-service | c.c.pnp.api.das.impl.AbstractDas | DOCS com.mongodb.client.internal.FindIterableImpl@5bcb6750 | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=response, sn=CAT2222L1QX, request-id=b8d02aae6cfe428288f7075e7a08c021, deviceId=67da58906c8c096f5412367f",
-    "2025-03-19 05:41:11,623 |   INFO | qtp1463022229-18          | onboarding-service | c.c.p.a.s.i.ConvergedPnpResourceDomainContextManagerImpl | Received Token with no RD Context from User system with Tenant system | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=response, sn=CAT2222L1QX, request-id=b8d02aae6cfe428288f7075e7a08c021, deviceId=67da58906c8c096f5412367f",
-    "2025-03-19 05:41:11,624 |   INFO | qtp1463022229-18          | onboarding-service | c.c.pnp.workflow.engine.utils.Utils | Device contact after 00 min, 00 sec - State Unclaimed OnbState Initializing | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=response, sn=CAT2222L1QX, request-id=b8d02aae6cfe428288f7075e7a08c021, deviceId=67da58906c8c096f5412367f",
-    "2025-03-19 05:41:11,624 |   INFO | qtp1463022229-18          | onboarding-service | c.c.p.w.e.a.impl.CommandServiceImpl | Preparing System Workflow for next request | correlationId=043a38b0-0da0-445a-beec-f8a5876af43b, pid=C9500-32QC, hs=response, sn=CAT2222L1QX, request-id=b8d02aae6cfe428288f7075e7a08c021, deviceId=67da58906c8c096f5412367f"
-];
+let logLines = [];
 
 
 const annotations = {};
@@ -300,17 +270,64 @@ function extractSearchTerms(rpnTokens) {
   );
 }
 
-document.getElementById('logFileInput').addEventListener('change', function (e) {
+const fileInput = document.getElementById("logFileInput");
+fileInput.addEventListener("change", function (e) {
   const file = e.target.files[0];
   if (!file) return;
+
+  const allowedTypes = [".log", ".txt", ".rtf"];
+  if (!allowedTypes.some((ext) => file.name.endsWith(ext))) {
+    alert("Only .log, .txt, or .rtf files are supported.");
+    return;
+  }
 
   const reader = new FileReader();
   reader.onload = function (event) {
     const contents = event.target.result;
-    logLines = contents.split(/\r?\n/);
+    logLines = contents.split(/\\r?\\n/);
     annotations = {};
-    filteredIndexes = logLines.map((_, index) => index); // reset view
+    filteredIndexes = logLines.map((_, index) => index);
     renderLog();
   };
   reader.readAsText(file);
+});
+
+const shareBtn = document.getElementById("shareAnnotationsBtn");
+shareBtn.addEventListener("click", () => {
+  const output = Object.entries(annotations)
+    .map(([index, { comment, timestamp }]) => `Line ${parseInt(index) + 1}: ${comment}\n${logLines[index]}`)
+    .join("\n\n");
+
+  const overlay = document.createElement("div");
+  overlay.className = "share-overlay";
+
+  const modal = document.createElement("div");
+  modal.className = "share-modal";
+
+  const textarea = document.createElement("textarea");
+  textarea.className = "share-textarea";
+  textarea.value = output;
+  textarea.readOnly = true;
+  textarea.rows = Math.min(Object.keys(annotations).length * 3, 30);
+
+  const copyBtn = document.createElement("button");
+  copyBtn.className = "share-copy";
+  copyBtn.textContent = "Copy to Clipboard";
+  copyBtn.addEventListener("click", () => {
+    textarea.select();
+    document.execCommand("copy");
+    copyBtn.textContent = "Copied!";
+    setTimeout(() => (copyBtn.textContent = "Copy to Clipboard"), 2000);
+  });
+
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "Close";
+  closeBtn.className = "share-close";
+  closeBtn.addEventListener("click", () => overlay.remove());
+
+  modal.appendChild(textarea);
+  modal.appendChild(copyBtn);
+  modal.appendChild(closeBtn);
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
 });
