@@ -1,6 +1,7 @@
+/* Root Theme Variables */
 :root {
   --bg-color-dark: #121212;
-  --bg-color-light: #ffffff;
+  --bg-color-light: #eff3f5;
   --text-color-dark: #e0e0e0;
   --text-color-light: #333;
   --accent-color: #007acc;
@@ -35,12 +36,11 @@
 
   --bg: var(--bg-color-light);
   --text-color: var(--text-color-light);
-  --border-color: #ccc;
-  --hover-bg: #f2f2f2;
-  --card-bg: #f9f9f9;
-  --bg-secondary: #f5f5f5;
+  --border-color: #bbb;
+  --hover-bg: #e7eff2;
+  --card-bg: #f9fafa;
+  --bg-secondary: #f4f7f9;
 }
-
 
 body {
   margin: 0;
@@ -68,6 +68,7 @@ h1 {
   background: none;
   color: inherit;
 }
+
 /* Layout container */
 .project-grid {
   display: grid;
@@ -111,7 +112,7 @@ h1 {
 
 /* Project & Quick Tool cards */
 .project-card {
-  background-color: #1e1e1e;
+  background-color: var(--card-bg);
   border: 1px solid #333;
   border-radius: 8px;
   padding: 1rem;
@@ -134,7 +135,7 @@ h1 {
 
 .project-desc {
   font-size: 0.9rem;
-  color: #bbb;
+  color: #989898;
   margin-bottom: 0.6rem;
 }
 
@@ -142,19 +143,19 @@ h1 {
 .project-card input[type="text"] {
   padding: 0.5rem;
   font-size: 0.9rem;
-  width: 100%;
+  width: 50%;
   border-radius: 6px;
-  border: 1px solid #444;
-  background-color: #1e1e1e;
-  color: #e0e0e0;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-color);
   margin-top: 0.25rem;
 }
 
 /* Buttons (Convert, Generate) */
 .project-card button {
-  background-color: #2b2b2b;
-  color: #e0e0e0;
-  border: 1px solid #444;
+  background-color: var(--bg-secondary);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
   padding: 0.4rem 0.8rem;
   border-radius: 6px;
   font-size: 0.85rem;
@@ -164,15 +165,15 @@ h1 {
 }
 
 .project-card button:hover {
-  background-color: #3a3a3a;
+  background-color: var(--hover-bg);
 }
 
 /* Result output display */
 .result {
   font-family: monospace;
   font-size: 0.9rem;
-  color: #b2fab4;
-  background-color: #1e3421;
+  color: #2c5e35;
+  background-color: #e3f2e5;
   border-left: 4px solid #4caf50;
   padding: 0.4rem 0.6rem;
   border-radius: 4px;
@@ -182,29 +183,33 @@ h1 {
 /* UUID result layout */
 .copy-result {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
+
 
 /* Copy button next to UUID */
 .copy-btn {
   background-color: transparent;
   border: none;
-  color: #bbb;
+  color: var(--text-color);
   font-size: 1rem;
   cursor: pointer;
   padding: 0.2rem;
 }
 
 .copy-btn:hover {
-  color: #fff;
+  color: var(--accent-color);
 }
 
 /* Tooltip after copying */
 .copy-tooltip {
-  background-color: #2f703a;
-  color: #b2fab4;
+  background-color: #d3f1d6;
+  color: #2c5e35;
   padding: 0.2rem 0.6rem;
   border-radius: 4px;
   font-size: 0.8rem;

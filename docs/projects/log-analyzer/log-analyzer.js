@@ -301,7 +301,7 @@ fileInput.addEventListener("change", function (e) {
   }
 
   const fileSizeKB = (file.size / 1024).toFixed(1); // in KB
-  fileNameDisplay.textContent = `📄 ${file.name}`;
+  fileNameDisplay.textContent = ` ${file.name}`;
 
   const reader = new FileReader();
   reader.onload = function (event) {
@@ -312,7 +312,7 @@ fileInput.addEventListener("change", function (e) {
     renderLog();
 
     const lineCount = logLines.length;
-    fileSummary.textContent = `📦 ${lineCount.toLocaleString()} lines | ${fileSizeKB} KB`;
+    fileSummary.textContent = ` | ${lineCount.toLocaleString()} lines | ${fileSizeKB} KB`;
   };
   reader.readAsText(file);
 });

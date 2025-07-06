@@ -9,44 +9,38 @@
 </head>
 <body>
   <header class="header">
-    <h2>Log Analyzer</h2>
+    <h3>Log Analyzer</h3>
     <button class="toggle-theme">🌞 Light Mode</button>
   </header>
 
-<main class="container">
-<section class="log-viewer-section">
+<main class="container log-analyzer-layout">
+  <!-- LEFT: log viewer -->
+  <section class="log-viewer-section">
+    <div class="file-upload">
+      <label for="logFileInput" class="upload-button">📁 Upload Log File</label>
+      <input type="file" id="logFileInput" accept=".log,.txt,.rtf" style="display: none;" />
+      <span id="fileNameDisplay" class="file-name"></span>
+      <span id="fileSummary" class="file-summary"></span>
+    </div>
+    
+    <div class="search-bar" id="log-search-bar">
+      <input type="text" id="log-search-input" placeholder="e.g. (Request OR Response) AND Error AND JAD23190AHJ" />
+      <button id="log-search-clear">✖</button>
+    </div>
 
-<div class="file-upload">
-  <label for="logFileInput" class="upload-button">📁 Upload Log File</label>
-  <input type="file" id="logFileInput" accept=".log,.txt,.rtf" style="display: none;" />
-  <span id="fileNameDisplay" class="file-name"></span>
-</div>
-<div id="fileSummary" class="file-summary"></div>
+    <div id="log-viewer" class="log-viewer"></div>
+  </section>
 
-  <div class="log-viewer-header">
-    <h4>Search Logs</h4>
-  </div>
-
-  <div class="search-bar" id="log-search-bar">
-    <input type="text" id="log-search-input" placeholder="e.g. (Request OR Response) AND Error AND JAD23190AHJ" />
-    <button id="log-search-clear">✖</button>
-  </div>
-
-  <div id="log-viewer" class="log-viewer"></div>
-</section>
-
-
-<section class="annotation-panel">
+  <!-- RIGHT: annotations panel + share button -->
+  <aside class="annotation-panel">
     <h4>Annotations</h4>
     <ul id="annotations-list" class="annotation-list"></ul>
-</section>
 
-<div class="action-bar" id="action-bar">
-  <button id="shareAnnotationsBtn" class="share-btn themed-button">🔗 Share Annotations</button>
-</div>
-
+    <div class="action-bar" id="action-bar">
+      <button id="shareAnnotationsBtn" class="share-btn themed-button">🔗 Share Annotations</button>
+    </div>
+  </aside>
 </main>
-
 
   <script src="log-analyzer.js"></script>
 </body>
