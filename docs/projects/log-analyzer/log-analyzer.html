@@ -9,7 +9,9 @@
 </head>
 <body>
   <header class="header">
-    <h3>Log Analyzer</h3>
+    <div><h2>Log Analyzer</h2>
+    <div id="log-viewer-header" class="log-viewer-header">Click on a line to tag it with a Note</div>
+    </div>
     <button class="toggle-theme">🌞 Light Mode</button>
   </header>
 
@@ -27,17 +29,21 @@
       <input type="text" id="log-search-input" placeholder="e.g. (Request OR Response) AND Error AND JAD23190AHJ" />
       <button id="log-search-clear">✖</button>
     </div>
-
+    
     <div id="log-viewer" class="log-viewer"></div>
+    
   </section>
 
   <!-- RIGHT: annotations panel + share button -->
   <aside class="annotation-panel">
-    <h4>Annotations</h4>
+    <div>
+      <h2>Notes</h2>
+      <p>Click on a Note to scroll to that line</p>
+      </div>
     <ul id="annotations-list" class="annotation-list"></ul>
 
     <div class="action-bar" id="action-bar">
-      <button id="shareAnnotationsBtn" class="share-btn themed-button">🔗 Share Annotations</button>
+      <button id="shareAnnotationsBtn" class="share-btn themed-button">🔗 Share Notes</button>
     </div>
   </aside>
 </main>
